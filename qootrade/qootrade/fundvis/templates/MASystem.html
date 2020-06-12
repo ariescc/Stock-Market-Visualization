@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <br><br><br><hr><br><br>
+       <div id="container1" style="height: 100%;"></div>
+       <div id="bias5" style="height: 100%;"></div>
+       <div id="bias10" style="height: 100%;"></div>
+       <div id="bias30" style="height: 100%;"></div>
+       <div id="bias60" style="height: 100%;"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+            var dom = document.getElementById("container");
+            var dom1 = document.getElementById("container1");
+            
+            var myChart = echarts.init(dom);
+            var myChart1 = echarts.init(dom1);
+            
+            var app = {};
+            var xdata = {{xdata|safe}};
+            var dwjz = {{dwjz|safe}};
+            var ma5 = {{ma5|safe}};
+            var ma10 = {{ma10|safe}};
+            var ma30 = {{ma30|safe}};
+            var ma60 = {{ma60|safe}};
+            var bias5 = {{bias5|safe}};
+            var bias10 = {{bias10|safe}};
+            var bias30 = {{bias30|safe}};
+            var bias60 = {{bias60|safe}};
+            option = null;
+            option1 = null;
+            option = {
+                title: {
+                    text: '均线系统图',
+                    textStyle: {
+                        fontWeight: 'bold'
+                    }
+                },
+                legend: {
+                    data: ['日价', 'MA5', 'MA10', 'MA30', 'MA60'],
+                },
+                dataZoom: [
+                    {
+                        id: 'dataZoomX',
+                        type: 'slider',
+                        xAxisIndex: [0],
+                        filterMode: 'filter'
+                    },
+                    {
+                        id: 'dataZoomY',
+                        type: 'slider',
+                        yAxisIndex: [0],
+                        filterMode: 'empty'
+                    }
+                ],
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xdata
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: '日价',
+                    data: dwjz,
+                    type: 'line',
+                    smooth: true,
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'min', name: '最小值'}
+                        ]
+                    }
+                },
+                {
+                    name: 'MA5',
+                    data: ma5,
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    name: 'MA10',
+                    data: ma10,
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    name: 'MA30',
+                    data: ma30,
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    name: 'MA60',
+                    data: ma60,
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+
+            option1 = {
+                title: {
+                    text: '乖离线系统'
+                },
+                legend: {
+                    data: ['bias5', 'bias10', 'bias30', 'bias60']
+                },
+                dataZoom: [
+                    {
+                        id: 'dataZoomX',
+                        type: 'slider',
+                        xAxisIndex: [0],
+                        filterMode: 'filter'
+                    },
+                    {
+                        id: 'dataZoomY',
+                        type: 'slider',
+                        yAxisIndex: [0],
+                        filterMode: 'empty'
+                    }
+                ],
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xdata
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: 'bias5',
+                    data: bias5,
+                    type: 'line',
+                    smooth: true,
+                    markLine: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'average', name: '平均值'}
+                        ]
+                    },
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'}
+                        ]
+                    }
+                },
+                {
+                    name: 'bias10',
+                    data: bias10,
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    name: 'bias30',
+                    data: bias30,
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    name: 'bias60',
+                    data: bias60,
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+
+           
+
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+
+            if (option1 && typeof option1 === "object") {
+                myChart1.setOption(option1, true);
+            }
+
+            
+       </script>
+   </body>
+</html>

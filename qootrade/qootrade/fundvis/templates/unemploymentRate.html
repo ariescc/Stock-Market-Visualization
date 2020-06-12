@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block unemploymentrate %}
+
+<section class="content">
+    <div id="container" style="height: 80%; width: 100%; float: center"></div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var data1 = {{ data | safe }};
+        console.log(data1);
+        option = null;
+        option = {
+            xAxis: {
+                type: 'category',
+                data: ["2018\/09","2018\/10","2018\/11","2018\/12","2019\/01","2019\/02","2019\/03","2019\/04","2019\/05","2019\/06","2019\/07","2019\/08","2019\/09","2019\/10","2019\/11","2019\/12","2020\/01","2020\/02","2020\/03","2020\/04"]
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: data1,
+                type: 'line',
+                smooth: true
+            }]
+        };
+        ;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</section>
+
+{% endblock %}
